@@ -1,0 +1,169 @@
+Curto Git e GitHub 
+
+## Aula 01 - O que é Git? ##
+
+-> É um software para rastrear alterações em qualquer conjunto de arquivos.
+	- Rastrear todos os arquivos que utilizamos em um projeto;
+	- Geralmente utilizado para coordenar trabalho de programadores;
+
+Objetivos: velocidade, integridade de dados e suporte para fluxos de trabalho não lineares distribuídos.
+
+Porque usar? 
+
+- Salvar múltiplas revisões do mesmo projeto em um único diretório;
+- Trocar de versões em um simples comando;
+- Trabalhar simultaneamente em 2 ou mais "features";
+- Colaborar com outros programadores.
+
+GitHub 
+
+-> serviço online, hospedagem na Internet para desenvolvimento de software e controle de versão usando Git.
+
+	- "Hostear" seu código em local seguro;
+	- Compartilhar projetos;
+	- Outros devs podem colaborar com seu projeto.
+
+
+
+## Aula 02 - Conceitos básicos do Git ##
+
+REPOSITÓRIO
+
+-> Diretório chamado .git dentro do seu projeto
+	- Rastreia todas as mudanças feitas nos arquivos do seu projeto, 
+	- Constroi um histórico.
+
+COMMIT
+
+-> Marco histórico daquilo que estamos trabalhando (lembrar do memory card)
+
+Estágios para commit: 
+
+			MODIFIED -> STAGING -> COMMITTED
+	
+	MODIFIED -> Arquivos alterados;
+	STAGING ->  Arquivos prontos para serem enviados (para + segurança);
+	COMMITTED -> Arquivos enviados "committed".
+
+
+BRANCH 
+
+-> Versões que são separadas das versões principais, para estabilizar, para trabalhar alterações...
+
+
+## Aula 03 - Instalando e configurando ##
+
+Comandos CMG
+
+ls ou dir -> abre diretório 
+ls -la -> vemos todos os diretórios da pasta
+ls <nome da pasta> -> vemos todos os arquivos que estão dentro da pasta
+
+cd + (nome do diretório) -> entra no diretório
+
+cd .. -> volta uma pasta 
+
+touch + (aula-de-git.txt) -> cria um arquivo
+New-item + (
+
+rm + (nome-do-arquivo.txt) -> remove arquivos
+
+mkdir teste1 -> criar diretório
+
+mv + (nome do arquivo) + (novo nome do arquivo) -> renomeia o arquivo no diretório
+
+mkdir <nome pasta> - criar pasta/diretorio
+
+## Aula 5 - Colocando arquivos no stage ##
+
+Comandos:
+git status - saber o status do arquivo, se tem algo preparado para commit
+git add <nome do arquivo> - mandar o arquivo para stage
+git add . - mandar todos os arquivos da página para o stage
+git rm --cached <nome do arquivo> - remover o arquivo de stage
+
+
+## Aula 6 - Fazendo commits ##
+
+Comandos 
+git commit -m "mensagem descritiva sobre o commit"
+git log - histórico do commit
+git log --online - forma condensada de exibir históricos
+
+
+## Aula 7 - Desfazendo commits ##
+
+Checkout --> Revert --> Reset 
+
+Checkout: voltamos no tempo e olhamos o estágio 
+	git checkout d102c6e <id do commit>
+	git checkout master - pare retornar o que estava antes
+Revert: Altera o histórico do Git e revertemos tudo que fizemos 
+	git rever 87d6d9d <id do commit> - reverter e para confirmar no final apertamos :q
+Reset: apagar commits, removeu completo 
+	git reset d102c6e <id do commit> - faz voltarmos para o commit citado e apaga as alterações feitas depois
+		Após isso, ainda terão alterações nos aquivos, mas se realmente quisermos apagar tudo usamos:
+			git reset d102c6e --hard <id do commit> - o mais perigoso, apaga tudo mesmo
+
+obs: Ex.: posso adicionar comentos em sequência git add index.html %% git status
+
+
+## Aula 8 - Ignorando arquivos ##
+
+para ignorar arquivos, criamos um arquivo ".gitignore" e dentro desse arquivo colocamos os arquivos q é para ignorar (ex: .env)
+
+Comandos:
+	mkdir <nome pasta> - criar pasta/diretorio
+
+## Aula 9 - Criando branch ##
+
+Comendos:
+	git branch - verifica quantas branchs tem no projeto
+	git branch <nome da branch> - cria uma branch 
+	git checkout teste - altera a branch que estamos
+	git branch -d <nome da branch> - para deletar branch (d minusculo verifica antes se houve merge)
+	git branch -D <nome da branch> - para deletar branch (d maiusculo deleta de qualquer forma)
+	
+
+
+## Aula 10 - Fundindo branch ##
+
+Para fundir branchs, precisamos ir para o destino
+Comandos:
+	git merge <nome da branch que vc quer adicionar> 
+	git diff <branch a ser merged> - mostra o terminal onde estão as diferenças
+
+
+## Aula 11 - Iniciando GitHub ##
+
+	Repositório em um servidor para que outros servidores possam pegar essas atualizações
+
+	git push <endereço do repositório no hub> + <nome do branch> - sob no hub as branchs
+	git remote add <nome criado ex: origin> + <endereço> -> criar um apelido para o endereço do hub
+	git remote -v -> para ver se o apelido para o endereço foi criado
+
+	Para criar um repositório:
+		- marcamos README (onde vamos colocar nome e título)
+		- .gitignore -- marcando LARAVEL
+
+	Para clonar projeto no HUB no meu precisamos
+		git clone <edereço com nome do projeto> + <renomear projeto se quiser ex:projeto clonado>
+		rm -rf <nome do projeto> - se quiser apagar sem verificações 
+
+	Para puxar algo do Hub 
+		git pull <endereço> + <nome da branch>
+
+## Aula 13 - Simulando multiplos devs ##
+
+	git commit -m "texto" + --author="Fulano <email.fulano@gmail.com>"
+
+## Aula 14 - Fazendo pull request ##
+
+	git checkout -b svg -> criar branch
+	git pull origin main - atualizar a branch 
+	git push origin svg - sunir atualizações pra branch
+
+## Aula 15 - Fazendo Fork de um repositório ##
+
+Criar uma cópia de um repositório para melhorar para o repositório do criador
+			

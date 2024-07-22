@@ -1,0 +1,174 @@
+Comandos:
+
+    - npx open cypress -> para abrir o cypress
+
+    - describe ("descrição", function () ) - O bloco descibe define a suíte de testes
+
+    - it ("descrição", funcion) - o bloco It define um caso de teste
+
+    - .only - executa apenas o teste definido (para isso, usamos após o "it")
+        -> it.only("descrição", funcion) - irá executar apenas esse teste
+
+    - .and () -> complementa algum comando
+     -> .and('contain', 'Mensagem enviada com sucesso.')
+
+    - cy.visit("URL do site") -> Para visitar uma página web com Cypress
+        ->  cy.visit('https://google.com')
+
+    - cy.title() -> obtem a propriedade do título da página que está ativa no momento
+    - .should -> fazer verificações
+        -> cy.title().should('be.equal', 'Central de Atendimento ao Cliente TAT')
+
+    - type() - verifica o texto que queremos digitar 
+        -> .type('Escola TAT')
+
+    - .click () - simula um click, geralmente para finalizar um comando ex: ENTER
+
+    - cy.get() - indentificamos os elementos que queremos verificar, interagir
+        -> cy.get('[data-test="avatar"]')
+    
+    - cy.get('input').should('have.value', 'abc')
+
+    - cy.contains(classe, texto) - verifica que na classe "x" tem um texto "y"
+        ->  cy.contains('button', 'Enviar').click()
+
+    - cy.select - utilizado para campos de seleção (é utilizado após o cy.get), podems selecionar por: texto Blog, value ou índice
+        -> `cy.get('select').select('Blog') // Seleção pelo texto Blog`
+        -> `cy.get('select').select('youtube') // Seleção pelo value youtube`
+        -> `cy.get('select').select(1) // Seleção pelo índice 1`
+
+    - cy.clock() -> congela o relógio do navegador
+
+    -   cy.tick("tempo em milisegundos") - avança no tempo com o relógio do navegador
+        ->   cy.tick(3000) -> avançou trÊs segundo
+        ->  geralmente esse comando é usado após o comando cy.clock()
+
+    - lodash -> para utilizarmos os comandos/funcionalidade javascript inclusas no loadsh, usamos "Cypress._" no lugar de "cy."
+     -. https://lodash.com/docs/4.17.15  -- blioteca do lodash
+
+        -Cypress._.times() serve para você executar uma função de _callback_ um certo número de vezes, onde o número de vezes é o primeiro argumento, e a função de _callback_ é o segundo.
+            - Cypress._.times (3, function() {função}) -> "3" numero de vezes e o segundo argumento é uma function
+            
+        - Cypress._.repeat() serve para repetir uma string um certo número de vezes, onde o primeiro argumento é a string a qual deseja-se repetir, e o segundo argumento quantas vezes tal string deve ser repetida.
+
+
+    - .check() -> utilizado para MARCAR campos de seleção em checkbox(es) ou radio(s).
+        Primeira maneira:
+        -> cy.get('encontramos a caixinha e digitamos o value de onde queremos marcar').check()`
+            -> cy.get('input[type="radio"][value="feedback"]')
+               .check()
+        -> cy.get('encontramos a caixinha').check(id de onde se quer marcar)`
+            -> cy.get('input[type="radio"]')
+               .check('feedback')`
+        
+    - cy.request () - você pode executar requisições HTTP à nível de rede, ganhando tempo no _setup_ dos testes e focando no que interessa quando se trata de testar as coisas pela interface gráfica de usuário.
+
+    - .last() -> pega o ultimo elemento selecionado 
+
+        
+        
+
+    - .uncheck() -> utilizado para DESMARCAR campos de seleção em checkbox(es) ou radio(s).
+        -> `cy.get('input[type="checkbox"]').uncheck()`.
+
+    - .selectFile('caminho do arquivo') -> faz upload de arquivos no cypress (anexos)
+        -> .selectFile('cypress/fixtures/example.json')
+            -> o caminho do arquivo sempre é relativo ao arquivo cypress.json
+
+    - 'drag-drop' -> análogo ao selectFiles, mas nesse caso simulamos que o arquivo está sendo arrastado e solto
+        -> .selectFile('./cypress/fixtures/example.json' {action: 'drag-drop'})
+
+    - .fixture -> comando para simplificar a destão de dados, com ele não precisamos passar todo o caminho de um anexo, colocamos apenas o nome
+               -> não precisamos colocar o caminho pq esse comando pega dentro da pastar fixture
+        -> cy.fixture('nome do arquivo') ----> cy.fixture('example.json')
+    
+    - .as() - é utilizado para atribuir um alias a um elemento e posteriormente referencia-log
+        -> cy.get('.botao-submit').as('botaoSubmit')
+        depois referenciamos o elemento usando seu alias
+        -> cy.get('@botaoSubmit').click();
+    
+    - fixture e as 
+        -> cy.fixture('example').as('sampleFile')
+            cy.get('input[type="file"]')
+            .selectFile('@sampleFile')
+
+    - .invoke() -> chamar métodos diretamente nos elementos selecionados
+        -> nesse exemplo, removemos um atrituto para ai clicar em um link, não ser aberto em outra página
+        -> .invoke('removeAttr', 'target')
+    
+    - .invoke('show') -> mostra algo escondido
+    - .invoke('hide') -> esconde algo
+
+
+
+
+    - . expect (verifica um arquivo dentro de um array) 
+        -> Nesse exemplo, pegamos um inpute do tipo "file(anexos)" e pegamos os valores do array para comparar com o nome esperado.
+            .should(function($input) {                                        -> colocamos uma função de callback no shoul
+            console.log($input)                                               ->  vimos o nome e posição do arquivo no CONSOLE (etapa dispensável)
+            expect($input[0].files[0].name).to.equal('example.json')          -> colocamos a posição do parâmetro, files e o nome a comparar
+        })
+
+    Verificações com o .should():
+        - be.equal -> verifica se está igual 
+        - be.visible -> verifica se está visível 
+        - be.checked -> verifica se foi feito o check
+        - not.be.checked -> verifica se está desmarcado
+        - have.value -> verifica se tem o valor
+        - not.have.value -> verifica se NÃO tem o valor
+        - have.length -> verifica o tamanho, comprimento, n° de elementos ex: se tem 3 caixas selecionadas
+        - have.attr -> verifica se tem determinado atributo no código (ex: cy.get('#privacy a').should('have.attr', 'target'(atributo), '_blank'(valor)))
+    
+    Comando .each():
+        - quando fazemos um "cy.get()" e é retornado mais de um elemento, usamos o .each() para passar por cada um desses elementos e então passsamos uma função como argumento
+        - é uma maneira conveniente de percorrer e realizar ações em cada elemento de uma lista de elementos selecionados       
+                 cy.get('input[type="radio"]') -> o campo radio vai retornar 3 elementos (basicamente seleciona os elementos)
+                .should('have.length', 3)     -> verificação intermediária para saber se tem trÊs argumentos
+                .each(function($radio))       -> comando each() para passar por cada um desses argumentos ($radio é o argumento)
+    
+
+    - .wrap: "empacota" os elementos, por exemplo em each com vários elementos, o wrap irá passar por cada um deles
+            cy.get('input[type="radio"]')    -> pega um radio de três elementos
+            .should('have.length', 3)        -> verifica se tem 3 elementos
+            .each(function(teste) {         -> pega esses três elementos e trabalha ele em uma função com argumento de nome "teste"
+                cy.wrap(teste).check()      -> vai passar por cada elemento e fazer um check
+                cy.wrap(teste).should('be.checked')   -> vai passar por cada elemento e verificar se foi checkado
+            }) 
+
+    - beforeEach (function) - antes de cada teste, esse comando executa a função que está dentro dele, evitando que a função seja copiada para todos os testes
+        -> geralmente colocamos no início da suíte de testes
+
+    
+
+    - delay - comando que permite acelar alguns procesos
+        Ex: textos muito longos podem fazer com que o teste demore a rodar, porém podemos corrigir isso com o daley
+            -> const longText = 'Texto longo' (definimos uma variável com um texto mto longo)
+            -> cy.get('campo onde será digitado o texto').type(longText, { delay: 0})
+                -> Com delay = 0 é como se o texto fosse copiado, muito rápido
+
+Encadeamento de comandos: 
+
+No cypress não é necessário declarar uma variável e em seguida chamala ela por uma função, podemos fazer um encademaento de funções:
+
+Exemplo: 
+
+cy.get('input[type="text"]')                                    -> pegamos um input do tipo texto 
+  .should('be.visible')                                         -> verifica se está visível 
+  .type('Olá mundo!')                                           -> digita o texto desejado
+  .should('have.value', 'Olá mundo!')                           -> verifica se foi digitado o texto que foi mandado no .type
+
+  
+Para importar comandos personalidados precisamos criar uma pasta "SUPPORT" e dentro dela temos que ter dois arquivos:
+    1- commands.js -> vamos escrever os comandos personalizados
+        ex: Comando que adicionar informaçõe no site e submete 
+
+            Cypress.Commands.add('fillMandatoryFieldsAndSubmit', function () {
+                cy.get('#firstName').type('David')
+                cy.get('#lastName').type('Junior')
+                cy.get('#email').type('teste@gmail.com')
+                cy.get('#open-text-area').type('Teste')
+                cy.get('button[type="submit"]').click()
+            })
+            
+    2- index.js -> importamos o "comands.js"
+        ex: import './commands'
